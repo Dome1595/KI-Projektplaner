@@ -37,6 +37,11 @@ supabase db push                            # wendet supabase/migrations/ an
 - Ein Slot je `(engagement, monat, slot_nr)`; Monat 1–12, Slot-Nr. 1–3, Laufzeit 6/12
 - **DSGVO-Löschung:** `delete from customers where id = ...` kaskadiert über alle Fachtabellen (Storage-Objekte separat löschen, Eintrag in `deletion_log` schreiben)
 
+## Status & Advisor-Hinweise
+
+- Migrationen `0001` + `0002` sind am **07.07.2026** in das Projekt `naallvmyawfmkqzrlxie` eingespielt (11 Tabellen, RLS überall aktiv, Roundtrip-Test bestanden).
+- Akzeptierter Advisor-Hinweis (Lint 0029): `is_active_internal_user()` ist für `authenticated` ausführbar. Das ist beabsichtigt – die RLS-Policies werten die Funktion im Kontext des anfragenden Nutzers aus; sie verrät nur, ob der Aufrufer selbst ein aktiver interner Nutzer ist.
+
 ## RLS-Modell (MVP)
 
 Interne Anwendung ohne Kundenzugang: Alle Tabellen haben RLS aktiv; Vollzugriff nur für **aktive interne Nutzer** (`is_active_internal_user()`, Eintrag in `app_users` mit `aktiv = true`). Die Nutzerverwaltung (Einladen/Deaktivieren) läuft über die Service-Role. Bei Ausbaustufe 2 (Kundenportal) kommen kundenbezogene Policies hinzu.
