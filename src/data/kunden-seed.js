@@ -19,8 +19,27 @@ export const KUNDEN_SEED = [
       slots_pro_monat: 2,
       start_datum: '2026-07-01'
     },
-    contacts: [{ name: 'Martin Krause', rolle: 'Geschäftsführer', email: 'krause@example.de', typ: 'entscheider' }],
-    kontextprofil: { rollenprofil: true, firmenprofil: true, team_kontext: true, prioritaeten_ziele: false, kommunikationsstil: true }
+    firmenprofil_vorhanden: true,
+    contacts: [
+      {
+        name: 'Martin Krause',
+        rolle: 'Geschäftsführer',
+        abteilung: 'Geschäftsführung',
+        position: 'Geschäftsführer',
+        email: 'krause@example.de',
+        typ: 'entscheider',
+        kontextprofil: { rollenprofil: true, team_kontext: true, prioritaeten_ziele: false, kommunikationsstil: true }
+      },
+      {
+        name: 'Sandra Weber',
+        rolle: 'Key-User',
+        abteilung: 'Auftragsabwicklung',
+        position: 'Teamleitung Innendienst',
+        email: 'weber@example.de',
+        typ: 'key_user',
+        kontextprofil: { rollenprofil: true, team_kontext: false, prioritaeten_ziele: false, kommunikationsstil: false }
+      }
+    ]
   },
   {
     id: 'demo-elektro-siedler',
@@ -37,8 +56,18 @@ export const KUNDEN_SEED = [
       slots_pro_monat: 1,
       start_datum: null
     },
-    contacts: [{ name: 'Jana Siedler', rolle: 'Prokuristin', email: 'siedler@example.de', typ: 'entscheider' }],
-    kontextprofil: { rollenprofil: true, firmenprofil: true, team_kontext: false, prioritaeten_ziele: false, kommunikationsstil: false }
+    firmenprofil_vorhanden: true,
+    contacts: [
+      {
+        name: 'Jana Siedler',
+        rolle: 'Prokuristin',
+        abteilung: 'Verwaltung',
+        position: 'Prokuristin',
+        email: 'siedler@example.de',
+        typ: 'entscheider',
+        kontextprofil: { rollenprofil: true, team_kontext: false, prioritaeten_ziele: false, kommunikationsstil: false }
+      }
+    ]
   },
   {
     id: 'demo-tischlerei-brandt',
@@ -55,7 +84,17 @@ export const KUNDEN_SEED = [
       slots_pro_monat: 2,
       start_datum: null
     },
-    contacts: [{ name: 'Ole Brandt', rolle: 'Inhaber', email: 'brandt@example.de', typ: 'entscheider' }],
-    kontextprofil: { rollenprofil: false, firmenprofil: false, team_kontext: false, prioritaeten_ziele: false, kommunikationsstil: false }
+    firmenprofil_vorhanden: false,
+    contacts: [
+      {
+        name: 'Ole Brandt',
+        rolle: 'Inhaber',
+        abteilung: 'Geschäftsführung',
+        position: 'Inhaber',
+        email: 'brandt@example.de',
+        typ: 'entscheider',
+        kontextprofil: { rollenprofil: false, team_kontext: false, prioritaeten_ziele: false, kommunikationsstil: false }
+      }
+    ]
   }
 ];

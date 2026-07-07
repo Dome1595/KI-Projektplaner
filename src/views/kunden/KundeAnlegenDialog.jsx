@@ -38,6 +38,8 @@ const initial = {
   mitarbeiterzahl: '',
   ansprechpartner: '',
   ansprechpartner_rolle: '',
+  ansprechpartner_abteilung: '',
+  ansprechpartner_position: '',
   ansprechpartner_email: '',
   engagement_status: 'discovery',
   retainer_eur: '',
@@ -100,10 +102,16 @@ export default function KundeAnlegenDialog({ open, onClose, onCreated }) {
                   </TextField>
                 </Grid>
                 <Grid size={{ xs: 12, sm: 5 }}>
-                  <TextField fullWidth label="Ansprechpartner" name="ansprechpartner" value={values.ansprechpartner} onChange={handleChange} />
+                  <TextField fullWidth label="Mitarbeiter/Ansprechpartner" name="ansprechpartner" value={values.ansprechpartner} onChange={handleChange} />
                 </Grid>
                 <Grid size={{ xs: 12, sm: 3 }}>
                   <TextField fullWidth label="Rolle" name="ansprechpartner_rolle" value={values.ansprechpartner_rolle} onChange={handleChange} />
+                </Grid>
+                <Grid size={{ xs: 12, sm: 4 }}>
+                  <TextField fullWidth label="Abteilung" name="ansprechpartner_abteilung" value={values.ansprechpartner_abteilung} onChange={handleChange} />
+                </Grid>
+                <Grid size={{ xs: 12, sm: 4 }}>
+                  <TextField fullWidth label="Position" name="ansprechpartner_position" value={values.ansprechpartner_position} onChange={handleChange} />
                 </Grid>
                 <Grid size={{ xs: 12, sm: 4 }}>
                   <TextField

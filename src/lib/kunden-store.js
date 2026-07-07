@@ -60,8 +60,20 @@ export function createKunde(input) {
       slots_pro_monat: input.slots_pro_monat ? Number(input.slots_pro_monat) : 2,
       start_datum: input.start_datum || null
     },
-    contacts: input.ansprechpartner ? [{ name: input.ansprechpartner, rolle: input.ansprechpartner_rolle || null, email: input.ansprechpartner_email || null, typ: 'entscheider' }] : [],
-    kontextprofil: { rollenprofil: false, firmenprofil: false, team_kontext: false, prioritaeten_ziele: false, kommunikationsstil: false }
+    firmenprofil_vorhanden: false,
+    contacts: input.ansprechpartner
+      ? [
+          {
+            name: input.ansprechpartner,
+            rolle: input.ansprechpartner_rolle || null,
+            abteilung: input.ansprechpartner_abteilung || null,
+            position: input.ansprechpartner_position || null,
+            email: input.ansprechpartner_email || null,
+            typ: 'entscheider',
+            kontextprofil: { rollenprofil: false, team_kontext: false, prioritaeten_ziele: false, kommunikationsstil: false }
+          }
+        ]
+      : []
   };
   writeAll([kunde, ...kunden]);
   return kunde;
@@ -85,15 +97,22 @@ export const LANGDOCK_STATUS = {
   live: { label: 'Live', color: 'success' }
 };
 
-export const KONTEXTPROFIL_TYPEN = [
+// Kontextprofile werden pro Mitarbeiter erstellt (PRD 4.1); nur das
+// Firmenprofil ist firmenbezogen.
+export const MITARBEITER_PROFIL_TYPEN = [
   { key: 'rollenprofil', label: 'Rollenprofil' },
-  { key: 'firmenprofil', label: 'Firmenprofil' },
   { key: 'team_kontext', label: 'Team-Kontext' },
   { key: 'prioritaeten_ziele', label: 'Prioritäten & Ziele' },
   { key: 'kommunikationsstil', label: 'Kommunikationsstil' }
 ];
 
 export function kontextprofilStand(kunde) {
-  const vorhanden = KONTEXTPROFIL_TYPEN.filter((t) => kunde.kontextprofil?.[t.key]).length;
-  return { vorhanden, gesamt: KONTEXTPROFIL_TYPEN.length };
+  const kontakte = kunde.contacts || [];
+  let vorhanden = kunde.firmenprofil_vorhanden ? 1 : 0;
+  let gesamt = 1;
+  for (const c of kontakte) {
+    gesamt += MITARBEITER_PROFIL_TYPEN.length;
+    vorhanden += MITARBEITER_PROFIL_TYPEN.filter((t) => c.kontextprofil?.[t.key]).length;
+  }
+  return { vorhanden, gesamt };
 }

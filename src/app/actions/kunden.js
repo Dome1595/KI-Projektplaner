@@ -11,15 +11,17 @@ import { getServerClient } from 'lib/supabase-server';
 // danach werden die Aufrufe an die Nutzer-Session gekoppelt.
 // =============================================================================
 
-const PROFIL_TYPEN = ['rollenprofil', 'firmenprofil', 'team_kontext', 'prioritaeten_ziele', 'kommunikationsstil'];
+const MITARBEITER_PROFIL_TYPEN = ['rollenprofil', 'team_kontext', 'prioritaeten_ziele', 'kommunikationsstil'];
 
 function mapKunde(row) {
   const engagements = [...(row.engagements || [])].sort((a, b) => new Date(b.created_at) - new Date(a.created_at));
   const eng = engagements[0] || {};
-  const kontextprofil = Object.fromEntries(PROFIL_TYPEN.map((t) => [t, false]));
-  for (const doc of row.documents || []) {
-    if (doc.ist_aktuell && PROFIL_TYPEN.includes(doc.typ)) kontextprofil[doc.typ] = true;
-  }
+  const aktuelleDokumente = (row.documents || []).filter((d) => d.ist_aktuell);
+  const firmenprofilVorhanden = aktuelleDokumente.some((d) => d.typ === 'firmenprofil');
+  const profilJeKontakt = (contactId) =>
+    Object.fromEntries(
+      MITARBEITER_PROFIL_TYPEN.map((t) => [t, aktuelleDokumente.some((d) => d.typ === t && d.contact_id === contactId)])
+    );
   return {
     id: row.id,
     name: row.name,
@@ -35,12 +37,21 @@ function mapKunde(row) {
       slots_pro_monat: eng.slots_pro_monat ?? null,
       start_datum: eng.start_datum || null
     },
-    contacts: (row.contacts || []).map((c) => ({ name: c.name, rolle: c.rolle, email: c.email, typ: c.typ })),
-    kontextprofil
+    firmenprofil_vorhanden: firmenprofilVorhanden,
+    contacts: (row.contacts || []).map((c) => ({
+      id: c.id,
+      name: c.name,
+      rolle: c.rolle,
+      abteilung: c.abteilung,
+      position: c.position,
+      email: c.email,
+      typ: c.typ,
+      kontextprofil: profilJeKontakt(c.id)
+    }))
   };
 }
 
-const SELECT = '*, engagements(*), contacts(*), documents(typ, ist_aktuell)';
+const SELECT = '*, engagements(*), contacts(*), documents(typ, ist_aktuell, contact_id)';
 
 export async function listKundenAction() {
   const sb = getServerClient();
@@ -91,6 +102,8 @@ export async function createKundeAction(input) {
       customer_id: kunde.id,
       name: input.ansprechpartner,
       rolle: input.ansprechpartner_rolle || null,
+      abteilung: input.ansprechpartner_abteilung || null,
+      position: input.ansprechpartner_position || null,
       email: input.ansprechpartner_email || null,
       typ: 'entscheider'
     });

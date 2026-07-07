@@ -86,11 +86,16 @@ create table customers (
 create trigger trg_customers_updated_at before update on customers
 for each row execute function set_updated_at();
 
+-- Mitarbeiter/Ansprechpartner des Kunden. Kontextprofile werden PRO
+-- MITARBEITER erstellt (documents.contact_id) – so sind Analysen je
+-- Abteilung und Position möglich; nur das Firmenprofil ist firmenbezogen.
 create table contacts (
   id uuid primary key default gen_random_uuid(),
   customer_id uuid not null references customers (id) on delete cascade,
   name text not null,
   rolle text,
+  abteilung text,
+  position text,
   email text,
   typ contact_typ not null default 'sonstig',
   created_at timestamptz not null default now()
@@ -124,6 +129,9 @@ create table documents (
   id uuid primary key default gen_random_uuid(),
   customer_id uuid not null references customers (id) on delete cascade,
   typ document_typ not null,
+  -- Personenbezogene Profiltypen (rollenprofil, team_kontext,
+  -- prioritaeten_ziele, kommunikationsstil) gehören zu einem Mitarbeiter;
+  -- firmenprofil ist firmenbezogen (contact_id null). Durchsetzung in der App.
   contact_id uuid references contacts (id) on delete set null,
   -- Versionierung: neue Version verweist auf Vorgänger; genau eine aktuelle Version je Strang
   vorgaenger_id uuid references documents (id) on delete set null,
@@ -148,6 +156,8 @@ create index idx_documents_customer_aktuell on documents (customer_id, typ) wher
 create table analysis_runs (
   id uuid primary key default gen_random_uuid(),
   customer_id uuid not null references customers (id) on delete cascade,
+  -- Analyse-Scope: null = ganzer Kunde, sonst auf einen Mitarbeiter begrenzt
+  contact_id uuid references contacts (id) on delete set null,
   dokument_ids uuid[] not null default '{}',
   prompt_version text not null,
   modell_version text not null,

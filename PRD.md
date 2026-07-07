@@ -128,15 +128,20 @@ Dieses Kapitel definiert die fachlichen Kernbegriffe verbindlich. Sie stammen au
 
 ### 4.1 Kontextprofil
 
-Das Kontextprofil eines Kunden besteht aus fünf Dokumenttypen (je Kunde, teils je Person):
+**Kontextprofile werden pro Mitarbeiter erstellt, nicht nur je Firma** – so sind Analysen für verschiedene Abteilungen und Positionen eines Kunden möglich. Die fünf Dokumenttypen verteilen sich auf zwei Ebenen:
 
-1. **Rollenprofil** – Rolle, Aufgaben, Pain Points einer Person
-2. **Firmenprofil** – Unternehmen, Branche, Produkte, Organisation
-3. **Team-Kontext** – Wer macht welche Aufgaben, Team-Größen, Vertretungen
-4. **Prioritäten & Ziele** – Unternehmens- und Bereichsziele, Jahresprioritäten
+**Firmenbezogen (einmal je Kunde):**
+
+1. **Firmenprofil** – Unternehmen, Branche, Produkte, Organisation
+
+**Mitarbeiterbezogen (je erfasstem Mitarbeiter):**
+
+2. **Rollenprofil** – Rolle, Aufgaben, Pain Points der Person
+3. **Team-Kontext** – Wer im Umfeld der Person macht welche Aufgaben, Team-Größen, Vertretungen
+4. **Prioritäten & Ziele** – Ziele und Prioritäten der Person bzw. ihres Bereichs
 5. **Kommunikationsstil** – Tonalität, Formulierungsmuster, Signaturen (Grundlage z. B. für den E-Mail-Skill)
 
-Ergänzt um **Termin-Transkripte** (Discovery-Termine, Monats-Reviews) als fortlaufende Erkenntnisquelle.
+Ergänzt um **Termin-Transkripte** (Discovery-Termine, Monats-Reviews) als fortlaufende Erkenntnisquelle. Mitarbeiter werden mit Abteilung und Position erfasst; die KI-Analyse kann auf den ganzen Kunden, eine Abteilung oder einzelne Mitarbeiter begrenzt werden.
 
 ### 4.2 Use Case & Quick-Win-Karte
 
@@ -214,7 +219,7 @@ Gliederung je Modul in **Must-have** (MVP-verbindlich), **Should-have** (MVP wen
 **Must-have:**
 
 - Kunde anlegen/bearbeiten mit: Firmenname, Branche, Größe (Mitarbeiterzahl), Logo (optional), Notizen
-- Ansprechpartner pro Kunde: Name, Rolle, E-Mail (mind. einer, mehrere möglich, mit Kennzeichnung Entscheider/Key-User/IT)
+- Mitarbeiter/Ansprechpartner pro Kunde: Name, Rolle, **Abteilung, Position**, E-Mail (mind. einer, mehrere möglich, mit Kennzeichnung Entscheider/Key-User/IT) – Träger der mitarbeiterbezogenen Kontextprofile (4.1)
 - Tool-Landschaft des Kunden erfassen: KI-Plattform (Standard: Langdock), Integrationen (Outlook/M365, ERP-System mit Name, CRM, Ablagen, Sonstige als Freitext) – Grundlage für die Umsetzbarkeitsprüfung der Analyse-Engine
 - Engagement pro Kunde: Status (Discovery/Angebot/Aktiv/Pausiert/Beendet), Retainer-Höhe (€/Monat), Laufzeit (6/12 Monate), Start-/Enddatum, Umsetzungs-Slots pro Monat (1–3)
 - Langdock-Setup-Status: Nicht gestartet / In Einrichtung / Live, mit Notizfeld (Workspace, Integrationen, Besonderheiten)
@@ -237,11 +242,11 @@ Gliederung je Modul in **Must-have** (MVP-verbindlich), **Should-have** (MVP wen
 - Upload von Dokumenten pro Kunde: Markdown, PDF, TXT, DOCX (max. 20 MB pro Datei); alternativ Text per Copy-Paste als Dokument anlegen
 - Dokumenttyp-Zuordnung: Rollenprofil, Firmenprofil, Team-Kontext, Prioritäten & Ziele, Kommunikationsstil, Termin-Transkript, Sonstiges
 - Bei Transkripten: Pflicht-Metadaten Termindatum und Teilnehmer; optional Terminart (Discovery/Review/Workshop)
-- Bei Rollenprofilen und Kommunikationsstil: optionale Zuordnung zu einer Person (Ansprechpartner) – mehrere Personen pro Kunde möglich
+- Mitarbeiterbezogene Profiltypen (Rollenprofil, Team-Kontext, Prioritäten & Ziele, Kommunikationsstil) werden **verpflichtend einem Mitarbeiter zugeordnet**; das Firmenprofil ist firmenbezogen (4.1)
 - Automatischer Typ-Vorschlag durch die KI beim Upload, vom Berater bestätig- oder korrigierbar
 - Dokumentliste pro Kunde mit Typ, Person, Datum, Version, Quelle; Volltext in der App einsehbar
 - Versionierung: neue Version eines Dokuments ersetzt die alte in künftigen Analysen; alte Versionen bleiben einsehbar
-- Vollständigkeits-Anzeige: Welche der fünf Kontextprofil-Typen liegen vor? (sichtbar in Kundenakte und Dashboard-Handlungsbedarf)
+- Vollständigkeits-Anzeige **pro Mitarbeiter** (4 mitarbeiterbezogene Typen) plus Firmenprofil-Status (sichtbar in Kundenakte und Dashboard-Handlungsbedarf)
 - Text-Extraktion aus PDF/DOCX serverseitig; bei fehlgeschlagener Extraktion klare Fehlermeldung und Copy-Paste als Ausweichweg
 
 **Should-have:**
@@ -261,7 +266,7 @@ Die Analyse-Engine ist die produktisierte Form des Use-Case-Finders. Sie arbeite
 
 **Must-have:**
 
-- Analyse-Lauf pro Kunde: Berater wählt die einzubeziehenden Dokumente (Standard: alle aktuellen Kontextprofile + neueste Transkripte) und startet die Analyse
+- Analyse-Lauf pro Kunde mit wählbarem **Scope**: ganzer Kunde, eine Abteilung oder einzelne Mitarbeiter; Berater wählt die einzubeziehenden Dokumente (Standard: Firmenprofil + Profile der gewählten Mitarbeiter + neueste Transkripte) und startet die Analyse
 - Ergebnis in ≤ 120 Sekunden: bis zu 10 Quick-Win-Hypothesen im Karten-Format (4.2), mit vorläufiger Einordnung (4.3), Frequenz- und Reichweiten-Schätzung sowie Wochenhebel-Label
 - **Beleg-Pflicht:** Jeder Vorschlag referenziert seine Quelle (Transkript-Zitat mit Fundstelle oder Kontextprofil-Abschnitt). Vorschläge ohne Beleg werden systemseitig verworfen (Halluzinations-Schutz)
 - Abgleich mit der Tool-Landschaft: Vorschläge nutzen nur beim Kunden verfügbare/anbindbare Tools; fehlende Voraussetzungen werden als solche ausgewiesen
@@ -664,13 +669,13 @@ Als Inhaber möchte ich alle Daten eines Kunden vollständig und protokolliert l
 
 **Customer** – id, name, branche, mitarbeiterzahl, logo, notizen, tool_landschaft (JSON: plattform, integrationen[]), langdock_status, archiviert_am
 
-**Contact** – id, customer_id, name, rolle, email, typ (Entscheider/Key-User/IT)
+**Contact (Mitarbeiter)** – id, customer_id, name, rolle, abteilung, position, email, typ (Entscheider/Key-User/IT); Träger der mitarbeiterbezogenen Kontextprofile
 
 **Engagement** – id, customer_id, status, retainer_eur, laufzeit_monate (6/12), start, ende, slots_pro_monat (1–3)
 
 **Document** – id, customer_id, typ (rollenprofil/firmenprofil/team_kontext/prioritaeten_ziele/kommunikationsstil/transkript/sonstiges), contact_id (optional), version, dateiname, storage_ref, text_extrahiert, metadaten (JSON: termindatum, teilnehmer[], terminart), erstellt_von/_am
 
-**AnalysisRun** – id, customer_id, dokument_ids[], prompt_version, modell_version, gestartet_von/_am, dauer, roh_ergebnis (JSON), uebernommen/verworfen (Zähler)
+**AnalysisRun** – id, customer_id, contact_id (optional: Analyse-Scope auf einen Mitarbeiter begrenzt), dokument_ids[], prompt_version, modell_version, gestartet_von/_am, dauer, roh_ergebnis (JSON), uebernommen/verworfen (Zähler)
 
 **UseCase** – id, customer_id, quelle (ki/manuell), karte (JSON: aufgabe, problem, ki_loesung, tools_daten, frequenz, reichweite, nutzen), einordnung (skill/agent/workflow/anwendung), belege (JSON[]: dokument_id, zitat, fundstelle), status, verworfen_begruendung, qualifizierung (JSON: 9 Abschnitte, je Feld: inhalt, bestaetigt), arbeitsanweisung (JSON: typspezifische Felder, je: inhalt, bestaetigt), scoring (JSON: wochenhebel_label, wochenhebel_min_pro_woche, huerde, reichweite), vorschlags_rang, manueller_rang, empfehlung (bool), verknuepfte_usecase_ids[]
 

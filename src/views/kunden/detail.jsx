@@ -17,7 +17,7 @@ import Typography from '@mui/material/Typography';
 
 // project imports
 import MainCard from 'components/MainCard';
-import { ENGAGEMENT_STATUS, LANGDOCK_STATUS, KONTEXTPROFIL_TYPEN } from 'lib/kunden-store';
+import { ENGAGEMENT_STATUS, LANGDOCK_STATUS, MITARBEITER_PROFIL_TYPEN } from 'lib/kunden-store';
 import { getKunde } from 'lib/kunden-api';
 
 // assets
@@ -87,7 +87,11 @@ export default function KundeDetailView() {
             <Zeile label="Mitarbeiter" value={kunde.mitarbeiterzahl} />
             <Divider sx={{ my: 0.5 }} />
             {(kunde.contacts || []).map((c, i) => (
-              <Zeile key={i} label={c.rolle || 'Ansprechpartner'} value={`${c.name}${c.email ? ` · ${c.email}` : ''}`} />
+              <Zeile
+                key={i}
+                label={[c.abteilung, c.position].filter(Boolean).join(' / ') || c.rolle || 'Ansprechpartner'}
+                value={`${c.name}${c.email ? ` · ${c.email}` : ''}`}
+              />
             ))}
             {kunde.notizen && (
               <>
@@ -118,20 +122,45 @@ export default function KundeDetailView() {
       </Grid>
 
       <Grid size={{ xs: 12, md: 4 }}>
-        <MainCard title="Kontextprofil-Vollständigkeit">
+        <MainCard title="Kontextprofile (pro Mitarbeiter)">
           <List dense disablePadding>
-            {KONTEXTPROFIL_TYPEN.map((t) => {
-              const da = Boolean(kunde.kontextprofil?.[t.key]);
-              return (
-                <ListItem key={t.key} disableGutters>
-                  <ListItemIcon sx={{ minWidth: 32 }}>
-                    {da ? <CheckCircleTwoTone twoToneColor="#52c41a" /> : <ClockCircleTwoTone twoToneColor="#faad14" />}
-                  </ListItemIcon>
-                  <ListItemText primary={t.label} secondary={da ? 'vorhanden' : 'fehlt'} />
-                </ListItem>
-              );
-            })}
+            <ListItem disableGutters>
+              <ListItemIcon sx={{ minWidth: 32 }}>
+                {kunde.firmenprofil_vorhanden ? <CheckCircleTwoTone twoToneColor="#52c41a" /> : <ClockCircleTwoTone twoToneColor="#faad14" />}
+              </ListItemIcon>
+              <ListItemText primary="Firmenprofil" secondary={kunde.firmenprofil_vorhanden ? 'vorhanden' : 'fehlt'} />
+            </ListItem>
           </List>
+          {(kunde.contacts || []).map((c, idx) => {
+            const offen = MITARBEITER_PROFIL_TYPEN.filter((t) => !c.kontextprofil?.[t.key]);
+            return (
+              <div key={idx}>
+                <Divider sx={{ my: 1 }} />
+                <Typography variant="subtitle2">
+                  {c.name}
+                  {c.abteilung || c.position ? ` · ${[c.abteilung, c.position].filter(Boolean).join(' / ')}` : ''}
+                </Typography>
+                <List dense disablePadding>
+                  {MITARBEITER_PROFIL_TYPEN.map((t) => {
+                    const da = Boolean(c.kontextprofil?.[t.key]);
+                    return (
+                      <ListItem key={t.key} disableGutters sx={{ py: 0.25 }}>
+                        <ListItemIcon sx={{ minWidth: 32 }}>
+                          {da ? <CheckCircleTwoTone twoToneColor="#52c41a" /> : <ClockCircleTwoTone twoToneColor="#faad14" />}
+                        </ListItemIcon>
+                        <ListItemText primary={t.label} secondary={da ? 'vorhanden' : 'fehlt'} />
+                      </ListItem>
+                    );
+                  })}
+                </List>
+                {offen.length === 0 && (
+                  <Typography variant="caption" color="success.main">
+                    Profil vollständig – bereit für die Analyse
+                  </Typography>
+                )}
+              </div>
+            );
+          })}
         </MainCard>
       </Grid>
 
