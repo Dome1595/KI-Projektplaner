@@ -26,6 +26,7 @@
     "@mui/utils": "9.0.1",
     "@mui/x-charts": "9.2.0",
     "@mui/x-date-pickers": "9.2.0",
+    "@supabase/supabase-js": "^2.110.1",
     "apexcharts": "5.10.4",
     "formik": "2.4.9",
     "framer-motion": "12.36.0",

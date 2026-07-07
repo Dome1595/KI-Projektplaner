@@ -1,6 +1,6 @@
 'use client';
 
-import { useMemo, useState } from 'react';
+import { useCallback, useEffect, useMemo, useState } from 'react';
 import { useRouter } from 'next/navigation';
 
 // material-ui
@@ -21,7 +21,8 @@ import Typography from '@mui/material/Typography';
 // project imports
 import MainCard from 'components/MainCard';
 import KundeAnlegenDialog from './KundeAnlegenDialog';
-import { listKunden, ENGAGEMENT_STATUS, LANGDOCK_STATUS, kontextprofilStand } from 'lib/kunden-store';
+import { ENGAGEMENT_STATUS, LANGDOCK_STATUS, kontextprofilStand } from 'lib/kunden-store';
+import { listKunden } from 'lib/kunden-api';
 
 // assets
 import { PlusOutlined, SearchOutlined } from '@ant-design/icons';
@@ -30,10 +31,24 @@ import { PlusOutlined, SearchOutlined } from '@ant-design/icons';
 
 export default function KundenView() {
   const router = useRouter();
-  const [kunden, setKunden] = useState(() => listKunden());
+  const [kunden, setKunden] = useState([]);
+  const [ladefehler, setLadefehler] = useState(null);
   const [suche, setSuche] = useState('');
   const [statusFilter, setStatusFilter] = useState('alle');
   const [dialogOffen, setDialogOffen] = useState(false);
+
+  const laden = useCallback(() => {
+    listKunden()
+      .then((d) => {
+        setKunden(d);
+        setLadefehler(null);
+      })
+      .catch((e) => setLadefehler(e.message));
+  }, []);
+
+  useEffect(() => {
+    laden();
+  }, [laden]);
 
   const gefiltert = useMemo(() => {
     const s = suche.trim().toLowerCase();
@@ -86,6 +101,12 @@ export default function KundenView() {
           ))}
         </TextField>
       </Stack>
+
+      {ladefehler && (
+        <Typography variant="body2" color="error" sx={{ mb: 2 }}>
+          Fehler beim Laden: {ladefehler}
+        </Typography>
+      )}
 
       <TableContainer>
         <Table size="small">
@@ -154,7 +175,6 @@ export default function KundenView() {
         open={dialogOffen}
         onClose={() => setDialogOffen(false)}
         onCreated={(kunde) => {
-          setKunden(listKunden());
           setDialogOffen(false);
           router.push(`/kunden/${kunde.id}`);
         }}

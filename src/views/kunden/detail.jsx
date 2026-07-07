@@ -1,6 +1,6 @@
 'use client';
 
-import { useMemo } from 'react';
+import { useEffect, useState } from 'react';
 import { useParams, useRouter } from 'next/navigation';
 
 // material-ui
@@ -17,7 +17,8 @@ import Typography from '@mui/material/Typography';
 
 // project imports
 import MainCard from 'components/MainCard';
-import { getKunde, ENGAGEMENT_STATUS, LANGDOCK_STATUS, KONTEXTPROFIL_TYPEN } from 'lib/kunden-store';
+import { ENGAGEMENT_STATUS, LANGDOCK_STATUS, KONTEXTPROFIL_TYPEN } from 'lib/kunden-store';
+import { getKunde } from 'lib/kunden-api';
 
 // assets
 import { ArrowLeftOutlined, CheckCircleTwoTone, ClockCircleTwoTone } from '@ant-design/icons';
@@ -40,7 +41,17 @@ function Zeile({ label, value }) {
 export default function KundeDetailView() {
   const { id } = useParams();
   const router = useRouter();
-  const kunde = useMemo(() => getKunde(id), [id]);
+  const [kunde, setKunde] = useState(null);
+  const [laedt, setLaedt] = useState(true);
+
+  useEffect(() => {
+    setLaedt(true);
+    getKunde(id)
+      .then((k) => setKunde(k))
+      .finally(() => setLaedt(false));
+  }, [id]);
+
+  if (laedt) return null;
 
   if (!kunde) {
     return (

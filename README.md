@@ -27,6 +27,14 @@ npm run lint     # ESLint
 
 Branding: Markenfarben Institut Perspektive Handwerk (`themes/brand.js` – Tiefblau `#004c71`, Nachtblau `#042344`, Limette `#bad31e`), Logo-Komponenten unter `src/components/logo/`.
 
+### Datenbetrieb (Mock vs. Supabase)
+
+Ohne Konfiguration läuft die App im **Mock-Betrieb** (localStorage mit Beispieldaten). Für den **Supabase-Betrieb**:
+
+1. Schema einspielen: `supabase/migrations/0001_initial_schema.sql` (per Supabase-MCP, `supabase db push` oder SQL-Editor)
+2. `.env.example` als `.env.local` kopieren und `NEXT_PUBLIC_SUPABASE_URL`, `NEXT_PUBLIC_SUPABASE_ANON_KEY`, `SUPABASE_SERVICE_ROLE_KEY` befüllen
+3. Neu bauen/starten – die Provider-Weiche (`src/lib/kunden-api.js`) schaltet automatisch auf Supabase (Server Actions, service_role nur serverseitig)
+
 ## Kern in einem Satz
 
 Aus Kontextprofil + Transkript wird in Minuten eine belegte, priorisierte Use-Case-Pipeline – und daraus eine präsentierbare Monats-Roadmap über die Retainer-Laufzeit (1–3 Umsetzungen pro Monat, Start immer mit Langdock-Setup + Erstprojekt).

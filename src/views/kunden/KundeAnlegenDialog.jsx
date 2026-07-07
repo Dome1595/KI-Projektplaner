@@ -11,13 +11,16 @@ import DialogTitle from '@mui/material/DialogTitle';
 import Grid from '@mui/material/Grid';
 import MenuItem from '@mui/material/MenuItem';
 import TextField from '@mui/material/TextField';
+import Typography from '@mui/material/Typography';
+import Stack from '@mui/material/Stack';
 
 // third-party
 import { Formik } from 'formik';
 import * as Yup from 'yup';
 
 // project imports
-import { createKunde, ENGAGEMENT_STATUS, LANGDOCK_STATUS } from 'lib/kunden-store';
+import { ENGAGEMENT_STATUS, LANGDOCK_STATUS } from 'lib/kunden-store';
+import { createKunde } from 'lib/kunden-api';
 
 const validation = Yup.object().shape({
   name: Yup.string().max(120).required('Firmenname ist Pflicht'),
@@ -52,13 +55,18 @@ export default function KundeAnlegenDialog({ open, onClose, onCreated }) {
       <Formik
         initialValues={initial}
         validationSchema={validation}
-        onSubmit={(values, { resetForm }) => {
-          const kunde = createKunde(values);
-          resetForm();
-          onCreated(kunde);
+        onSubmit={async (values, { resetForm, setStatus, setSubmitting }) => {
+          try {
+            const kunde = await createKunde(values);
+            resetForm();
+            onCreated(kunde);
+          } catch (e) {
+            setStatus({ fehler: e.message });
+            setSubmitting(false);
+          }
         }}
       >
-        {({ values, errors, touched, handleChange, handleBlur, handleSubmit }) => (
+        {({ values, errors, touched, status, isSubmitting, handleChange, handleBlur, handleSubmit }) => (
           <form noValidate onSubmit={handleSubmit}>
             <DialogTitle>Kunde anlegen</DialogTitle>
             <DialogContent dividers>
@@ -140,13 +148,18 @@ export default function KundeAnlegenDialog({ open, onClose, onCreated }) {
                 </Grid>
               </Grid>
             </DialogContent>
-            <DialogActions>
-              <Button color="secondary" onClick={onClose}>
-                Abbrechen
-              </Button>
-              <Button type="submit" variant="contained">
-                Anlegen
-              </Button>
+            <DialogActions sx={{ justifyContent: 'space-between' }}>
+              <Typography variant="caption" color="error" sx={{ pl: 1 }}>
+                {status?.fehler ? `Speichern fehlgeschlagen: ${status.fehler}` : ''}
+              </Typography>
+              <Stack direction="row" spacing={1}>
+                <Button color="secondary" onClick={onClose}>
+                  Abbrechen
+                </Button>
+                <Button type="submit" variant="contained" disabled={isSubmitting}>
+                  Anlegen
+                </Button>
+              </Stack>
             </DialogActions>
           </form>
         )}
