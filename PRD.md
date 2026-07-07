@@ -778,6 +778,6 @@ Die Prompts werden aus dem bestehenden Use-Case-Finder-Systemprompt abgeleitet u
 2. **Monats-Review-Report:** Bestandteil des MVP als Must-have-Export (eingearbeitet in 5.7 und M4); die Automatik (Erinnerung + vorbefüllter Entwurf) folgt in Ausbaustufe 2
 3. **KI-/Datenschutz-Klausel:** Entwurf liegt vor unter `docs/vertragsklausel-entwurf.md` – vor Verwendung anwaltlich prüfen lassen
 
-**Offene Punkte (nicht blockierend für den Start):**
+4. **Branding (geliefert 07.07.2026):** Marke **Institut Perspektive Handwerk**. Verbindliche Farben: `#bad31e` (Limette), `#042344` (Nachtblau), `#004c71` (Tiefblau), Schwarz, Weiß. Umsetzung: Primärskala um Tiefblau/Nachtblau, Limette als Akzentskala (`themes/brand.js`); Logo-Symbol (fünf diagonale Balken) als SVG-Nachbau in `src/components/logo/` – kann jederzeit durch die Original-Vektordatei ersetzt werden
 
-1. **Branding-Assets:** Logo-Dateien und Hex-Farbwerte von Perspektivgeber werden nachgeliefert. Bis dahin neutrales Platzhalter-Theme (siehe 6.1); Austausch ist ein zentraler, kleiner Eingriff (Theme-Konstanten + Logo-Komponente)
+**Offene Punkte:** keine blockierenden Punkte offen

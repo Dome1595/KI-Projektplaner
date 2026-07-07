@@ -1,22 +1,33 @@
 'use client';
 
 // material-ui
-import { useTheme } from '@mui/material/styles';
+import Stack from '@mui/material/Stack';
+import Box from '@mui/material/Box';
 import Typography from '@mui/material/Typography';
 
+// project imports
+import LogoIcon from './LogoIcon';
+import { BRAND } from '../../../themes/brand';
+
 /**
- * Platzhalter-Wortmarke, bis die finalen Perspektivgeber-Branding-Assets
- * vorliegen (PRD Kapitel 12). Beim Austausch nur diese Komponente und
- * LogoIcon.jsx ersetzen.
+ * Wortmarke der Anwendung: Logo-Symbol + App-Name, darunter der Institutsname.
+ * Farben gemäß Markenvorgabe (PRD Kapitel 12).
  */
 
 // ==============================|| LOGO ||============================== //
 
 export default function LogoMain() {
-  const theme = useTheme();
   return (
-    <Typography variant="h4" component="span" sx={{ fontWeight: 700, color: theme.vars.palette.primary.main, lineHeight: 1 }}>
-      KI-Projektplaner
-    </Typography>
+    <Stack direction="row" spacing={1.25} alignItems="center">
+      <LogoIcon size={34} />
+      <Box>
+        <Typography variant="h5" component="span" sx={{ display: 'block', fontWeight: 700, color: BRAND.navy, lineHeight: 1.1 }}>
+          KI-Projektplaner
+        </Typography>
+        <Typography variant="caption" component="span" sx={{ display: 'block', color: 'text.secondary', lineHeight: 1.2 }}>
+          Institut Perspektive Handwerk
+        </Typography>
+      </Box>
+    </Stack>
   );
 }

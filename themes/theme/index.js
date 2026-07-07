@@ -1,7 +1,13 @@
+// project imports
+import { brandBlueScale, brandLimeScale } from '../brand';
+
 // ==============================|| PRESET THEME - DEFAULT ||============================== //
 
 export default function Default(colors) {
-  const { blue, red, gold, cyan, green, grey } = colors;
+  const { red, gold, cyan, green, grey } = colors;
+  // Markenfarben Institut Perspektive Handwerk statt Ant-Design-Blau (themes/brand.js)
+  const blue = brandBlueScale;
+  const lime = brandLimeScale;
   const greyColors = {
     0: grey[0],
     50: grey[1],
@@ -84,6 +90,21 @@ export default function Default(colors) {
       dark: green[7],
       darker: green[9],
       contrastText
+    },
+    // Marken-Akzent (Limette #bad31e) – für Hervorhebungen, Charts, Exporte;
+    // nicht als semantisches success/warning verwenden
+    accent: {
+      lighter: lime[0],
+      100: lime[1],
+      200: lime[2],
+      light: lime[3],
+      400: lime[4],
+      main: lime[5],
+      dark: lime[6],
+      700: lime[7],
+      darker: lime[8],
+      900: lime[9],
+      contrastText: '#042344'
     },
     grey: greyColors
   };

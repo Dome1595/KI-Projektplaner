@@ -25,7 +25,7 @@ npm run build    # Produktions-Build
 npm run lint     # ESLint
 ```
 
-Hinweis Branding: Bis die finalen Perspektivgeber-Assets vorliegen, verwendet die App eine Platzhalter-Wortmarke (`src/components/logo/`) und das neutrale Mantis-Theme (`src/themes/`).
+Branding: Markenfarben Institut Perspektive Handwerk (`themes/brand.js` – Tiefblau `#004c71`, Nachtblau `#042344`, Limette `#bad31e`), Logo-Komponenten unter `src/components/logo/`.
 
 ## Kern in einem Satz
 
