@@ -128,15 +128,20 @@ Dieses Kapitel definiert die fachlichen Kernbegriffe verbindlich. Sie stammen au
 
 ### 4.1 Kontextprofil
 
-Das Kontextprofil eines Kunden besteht aus fünf Dokumenttypen (je Kunde, teils je Person):
+**Kontextprofile werden pro Mitarbeiter erstellt, nicht nur je Firma** – so sind Analysen für verschiedene Abteilungen und Positionen eines Kunden möglich. Die fünf Dokumenttypen verteilen sich auf zwei Ebenen:
 
-1. **Rollenprofil** – Rolle, Aufgaben, Pain Points einer Person
-2. **Firmenprofil** – Unternehmen, Branche, Produkte, Organisation
-3. **Team-Kontext** – Wer macht welche Aufgaben, Team-Größen, Vertretungen
-4. **Prioritäten & Ziele** – Unternehmens- und Bereichsziele, Jahresprioritäten
+**Firmenbezogen (einmal je Kunde):**
+
+1. **Firmenprofil** – Unternehmen, Branche, Produkte, Organisation
+
+**Mitarbeiterbezogen (je erfasstem Mitarbeiter):**
+
+2. **Rollenprofil** – Rolle, Aufgaben, Pain Points der Person
+3. **Team-Kontext** – Wer im Umfeld der Person macht welche Aufgaben, Team-Größen, Vertretungen
+4. **Prioritäten & Ziele** – Ziele und Prioritäten der Person bzw. ihres Bereichs
 5. **Kommunikationsstil** – Tonalität, Formulierungsmuster, Signaturen (Grundlage z. B. für den E-Mail-Skill)
 
-Ergänzt um **Termin-Transkripte** (Discovery-Termine, Monats-Reviews) als fortlaufende Erkenntnisquelle.
+Ergänzt um **Termin-Transkripte** (Discovery-Termine, Monats-Reviews) als fortlaufende Erkenntnisquelle. Mitarbeiter werden mit Abteilung und Position erfasst; die KI-Analyse kann auf den ganzen Kunden, eine Abteilung oder einzelne Mitarbeiter begrenzt werden.
 
 ### 4.2 Use Case & Quick-Win-Karte
 
@@ -214,7 +219,7 @@ Gliederung je Modul in **Must-have** (MVP-verbindlich), **Should-have** (MVP wen
 **Must-have:**
 
 - Kunde anlegen/bearbeiten mit: Firmenname, Branche, Größe (Mitarbeiterzahl), Logo (optional), Notizen
-- Ansprechpartner pro Kunde: Name, Rolle, E-Mail (mind. einer, mehrere möglich, mit Kennzeichnung Entscheider/Key-User/IT)
+- Mitarbeiter/Ansprechpartner pro Kunde: Name, Rolle, **Abteilung, Position**, E-Mail (mind. einer, mehrere möglich, mit Kennzeichnung Entscheider/Key-User/IT) – Träger der mitarbeiterbezogenen Kontextprofile (4.1)
 - Tool-Landschaft des Kunden erfassen: KI-Plattform (Standard: Langdock), Integrationen (Outlook/M365, ERP-System mit Name, CRM, Ablagen, Sonstige als Freitext) – Grundlage für die Umsetzbarkeitsprüfung der Analyse-Engine
 - Engagement pro Kunde: Status (Discovery/Angebot/Aktiv/Pausiert/Beendet), Retainer-Höhe (€/Monat), Laufzeit (6/12 Monate), Start-/Enddatum, Umsetzungs-Slots pro Monat (1–3)
 - Langdock-Setup-Status: Nicht gestartet / In Einrichtung / Live, mit Notizfeld (Workspace, Integrationen, Besonderheiten)
@@ -237,11 +242,11 @@ Gliederung je Modul in **Must-have** (MVP-verbindlich), **Should-have** (MVP wen
 - Upload von Dokumenten pro Kunde: Markdown, PDF, TXT, DOCX (max. 20 MB pro Datei); alternativ Text per Copy-Paste als Dokument anlegen
 - Dokumenttyp-Zuordnung: Rollenprofil, Firmenprofil, Team-Kontext, Prioritäten & Ziele, Kommunikationsstil, Termin-Transkript, Sonstiges
 - Bei Transkripten: Pflicht-Metadaten Termindatum und Teilnehmer; optional Terminart (Discovery/Review/Workshop)
-- Bei Rollenprofilen und Kommunikationsstil: optionale Zuordnung zu einer Person (Ansprechpartner) – mehrere Personen pro Kunde möglich
+- Mitarbeiterbezogene Profiltypen (Rollenprofil, Team-Kontext, Prioritäten & Ziele, Kommunikationsstil) werden **verpflichtend einem Mitarbeiter zugeordnet**; das Firmenprofil ist firmenbezogen (4.1)
 - Automatischer Typ-Vorschlag durch die KI beim Upload, vom Berater bestätig- oder korrigierbar
 - Dokumentliste pro Kunde mit Typ, Person, Datum, Version, Quelle; Volltext in der App einsehbar
 - Versionierung: neue Version eines Dokuments ersetzt die alte in künftigen Analysen; alte Versionen bleiben einsehbar
-- Vollständigkeits-Anzeige: Welche der fünf Kontextprofil-Typen liegen vor? (sichtbar in Kundenakte und Dashboard-Handlungsbedarf)
+- Vollständigkeits-Anzeige **pro Mitarbeiter** (4 mitarbeiterbezogene Typen) plus Firmenprofil-Status (sichtbar in Kundenakte und Dashboard-Handlungsbedarf)
 - Text-Extraktion aus PDF/DOCX serverseitig; bei fehlgeschlagener Extraktion klare Fehlermeldung und Copy-Paste als Ausweichweg
 
 **Should-have:**
@@ -261,7 +266,7 @@ Die Analyse-Engine ist die produktisierte Form des Use-Case-Finders. Sie arbeite
 
 **Must-have:**
 
-- Analyse-Lauf pro Kunde: Berater wählt die einzubeziehenden Dokumente (Standard: alle aktuellen Kontextprofile + neueste Transkripte) und startet die Analyse
+- Analyse-Lauf pro Kunde mit wählbarem **Scope**: ganzer Kunde, eine Abteilung oder einzelne Mitarbeiter; Berater wählt die einzubeziehenden Dokumente (Standard: Firmenprofil + Profile der gewählten Mitarbeiter + neueste Transkripte) und startet die Analyse
 - Ergebnis in ≤ 120 Sekunden: bis zu 10 Quick-Win-Hypothesen im Karten-Format (4.2), mit vorläufiger Einordnung (4.3), Frequenz- und Reichweiten-Schätzung sowie Wochenhebel-Label
 - **Beleg-Pflicht:** Jeder Vorschlag referenziert seine Quelle (Transkript-Zitat mit Fundstelle oder Kontextprofil-Abschnitt). Vorschläge ohne Beleg werden systemseitig verworfen (Halluzinations-Schutz)
 - Abgleich mit der Tool-Landschaft: Vorschläge nutzen nur beim Kunden verfügbare/anbindbare Tools; fehlende Voraussetzungen werden als solche ausgewiesen
@@ -382,11 +387,11 @@ Die Analyse-Engine ist die produktisierte Form des Use-Case-Finders. Sie arbeite
 - **Kunden-Roadmap-Export** (PDF und Markdown): Deckblatt (Kundenname, Zeitraum, optional Kundenlogo), priorisierte Use-Case-Übersicht, Monats-Roadmap, pro Use Case Kurzbeschreibung und Nutzen – geeignet als Angebots-Anlage und Monats-Review-Unterlage
 - **Quick-Win-Übersicht** (Markdown): alle Karten + Priorisierungs-Tabelle, format-kompatibel zum bisherigen Use-Case-Finder-Artefakt (Schritt 1)
 - **Arbeitsanweisungs-Export:** einzelne Use Cases als `skill.md` / `agent.md` / `workflow.md` (Dateiname: `qualifizierter-use-case-[name]-[kunde].md` bzw. typspezifisch), einzeln oder als ZIP pro Kunde
+- **Monats-Review-Report** (PDF und Markdown): umgesetzte Slots des Monats, Nutzen-Bilanz (Summe Wochenhebel der Live-Use-Cases), Ausblick Folgemonat – zentrale Unterlage für Monats-Reviews und Verlängerungsgespräche
 - Alle Exporte ohne interne Felder (Scoring-Interna, interne Notizen, Daten anderer Kunden); Export-Protokoll (wer, wann, was)
 
 **Should-have:**
 
-- Monats-Review-Report: umgesetzte Slots des Monats, Nutzen-Bilanz (Summe Wochenhebel der Live-Use-Cases), Ausblick Folgemonat
 - Perspektivgeber-Branding (Logo, Farben) in PDF-Exporten konfigurierbar
 
 **Nice-to-have:**
@@ -435,7 +440,7 @@ Die UI baut auf dem **Mantis Free React Admin Template v2.2 (Next.js-Variante)**
 - **Layout:** Dashboard-Layout mit einklappbarer Seitenleiste (Drawer), Kopfzeile mit Suche/Profil, Breadcrumbs, Content-Bereich mit Karten (`MainCard`)
 - **Charts:** ApexCharts (`react-apexcharts`) bzw. MUI X-Charts für Dashboard-Auswertungen
 - **Formulare:** Formik + Yup (Validierung), MUI-Formularkomponenten
-- **Theming:** zentrales Theme (Farben, Typografie Public Sans/Inter, Schatten, Komponenten-Overrides) – wird auf Perspektivgeber-Branding angepasst (Primärfarbe, Logo); Struktur der Mantis-Theme-Konfiguration bleibt erhalten
+- **Theming:** zentrales Theme (Farben, Typografie Public Sans/Inter, Schatten, Komponenten-Overrides) – wird auf Perspektivgeber-Branding angepasst (Primärfarbe, Logo); Struktur der Mantis-Theme-Konfiguration bleibt erhalten. Bis die finalen Branding-Assets vorliegen (siehe 12), wird ein neutrales Platzhalter-Theme verwendet; Farben und Logo sind als zentrale Theme-Konstanten hinterlegt und in einem Schritt austauschbar
 - **Struktur-Konventionen des Templates werden übernommen:** `src/app` (App Router, Route-Gruppen `(auth)`/`(dashboard)`), `src/layout/Dashboard`, `src/components` (u. a. `MainCard`, Karten-Bausteine), `src/menu-items` (Navigationskonfiguration), `src/themes`
 
 Zusätzlich benötigte Bausteine, die das freie Template nicht mitbringt (werden auf MUI-Basis ergänzt): Kanban-Board und Drag-&-Drop-Listen (z. B. `dnd-kit`), Datei-Upload mit Fortschritt, Diff-/Versionsansicht für Dokumente.
@@ -558,7 +563,7 @@ Die Anwendung verarbeitet personenbezogene Daten von Kundenmitarbeitern (Rollenp
 
 - **Datenhaltung ausschließlich in der EU** (Supabase EU-Region, EU-Hosting der App)
 - **KI-Verarbeitung** über die Claude API mit Auftragsverarbeitungsvertrag (AVV) und vertraglich zugesicherter Nicht-Nutzung der Daten für Modell-Training; Datenregion EU soweit verfügbar
-- **Löschkonzept:** vollständige Löschung aller Daten eines Kunden auf Anfrage bzw. bei Engagement-Ende (Dokumente inkl. Storage, Analysen, Use Cases, Exporte, Logs); Löschung protokolliert
+- **Löschkonzept mit Aufbewahrungsfrist:** Nach Engagement-Ende bleiben die Kundendaten **180 Tage** erhalten (Rückfragen, Reaktivierung, Verlängerung); danach erinnert das System aktiv an die Löschung (Handlungsbedarf-Liste im Dashboard). Vollständige Löschung aller Daten eines Kunden (Dokumente inkl. Storage, Analysen, Use Cases, Exporte, Logs) jederzeit auf Anfrage möglich; jede Löschung wird protokolliert
 - **Mandantentrennung:** strikte Trennung auf Datenebene (Row-Level-Security); Prompts enthalten ausschließlich Daten des betreffenden Kunden; Exporte enthalten nie Daten anderer Kunden
 - **Authentifizierung:** Microsoft 365 SSO (Entra ID, OIDC); nur eingeladene Konten der eigenen Organisation; Session-Timeout
 - **Transport & Speicherung:** TLS für alle Verbindungen, Verschlüsselung at rest (Datenbank und Datei-Storage)
@@ -664,13 +669,13 @@ Als Inhaber möchte ich alle Daten eines Kunden vollständig und protokolliert l
 
 **Customer** – id, name, branche, mitarbeiterzahl, logo, notizen, tool_landschaft (JSON: plattform, integrationen[]), langdock_status, archiviert_am
 
-**Contact** – id, customer_id, name, rolle, email, typ (Entscheider/Key-User/IT)
+**Contact (Mitarbeiter)** – id, customer_id, name, rolle, abteilung, position, email, typ (Entscheider/Key-User/IT); Träger der mitarbeiterbezogenen Kontextprofile
 
 **Engagement** – id, customer_id, status, retainer_eur, laufzeit_monate (6/12), start, ende, slots_pro_monat (1–3)
 
 **Document** – id, customer_id, typ (rollenprofil/firmenprofil/team_kontext/prioritaeten_ziele/kommunikationsstil/transkript/sonstiges), contact_id (optional), version, dateiname, storage_ref, text_extrahiert, metadaten (JSON: termindatum, teilnehmer[], terminart), erstellt_von/_am
 
-**AnalysisRun** – id, customer_id, dokument_ids[], prompt_version, modell_version, gestartet_von/_am, dauer, roh_ergebnis (JSON), uebernommen/verworfen (Zähler)
+**AnalysisRun** – id, customer_id, contact_id (optional: Analyse-Scope auf einen Mitarbeiter begrenzt), dokument_ids[], prompt_version, modell_version, gestartet_von/_am, dauer, roh_ergebnis (JSON), uebernommen/verworfen (Zähler)
 
 **UseCase** – id, customer_id, quelle (ki/manuell), karte (JSON: aufgabe, problem, ki_loesung, tools_daten, frequenz, reichweite, nutzen), einordnung (skill/agent/workflow/anwendung), belege (JSON[]: dokument_id, zitat, fundstelle), status, verworfen_begruendung, qualifizierung (JSON: 9 Abschnitte, je Feld: inhalt, bestaetigt), arbeitsanweisung (JSON: typspezifische Felder, je: inhalt, bestaetigt), scoring (JSON: wochenhebel_label, wochenhebel_min_pro_woche, huerde, reichweite), vorschlags_rang, manueller_rang, empfehlung (bool), verknuepfte_usecase_ids[]
 
@@ -725,7 +730,7 @@ Die Prompts werden aus dem bestehenden Use-Case-Finder-Systemprompt abgeleitet u
 
 - **Kundenportal (read-only):** Kunde sieht seine Roadmap, Pipeline-Status und fertige Use Cases; optionale Kommentarfunktion
 - **Transkript-Import:** automatischer Import aus Meeting-Tools (z. B. Teams, Zoom, Fireflies, tl;dv)
-- **Monats-Review-Automatik:** Report-Entwurf per Klick zum Monatsende (umgesetzte Slots, Nutzen-Bilanz, Ausblick)
+- **Review-Automatik:** automatische Erinnerung + vorbefüllter Report-Entwurf zum Monatsende (der Monats-Review-Report selbst ist bereits MVP-Bestandteil, siehe 5.7)
 
 ### 10.3 Ausbaustufe 3
 
@@ -744,7 +749,7 @@ Die Prompts werden aus dem bestehenden Use-Case-Finder-Systemprompt abgeleitet u
 | M1 – Fundament | Projekt-Setup auf Mantis-Basis (Next.js), Theming/Branding, M365-SSO, Kunden-/Engagement-Verwaltung, Dokumenten-Upload mit Typisierung | Kundenakte mit Dokumenten nutzbar |
 | M2 – Analyse | KI-Stufen 1+2 (Klassifikation, Extraktion mit Beleg-Validierung), Review-Modus, Pipeline (Board + Tabelle) | Belegte Quick-Win-Vorschläge aus echten Kundendaten |
 | M3 – Tiefe | Qualifizierung + Konzeption (Stufen 3+4), Statuslogik mit Validierung, Use-Case-Detail | Umsetzungsreife Arbeitsanweisungen im System |
-| M4 – Steuerung | Priorisierung (Drag & Drop), Roadmap mit Monats-Slots, Präsentationsmodus, Exporte (PDF/MD), Dashboard | Vollständiger Kernfluss bis zum Kundentermin-Export |
+| M4 – Steuerung | Priorisierung (Drag & Drop), Roadmap mit Monats-Slots, Präsentationsmodus, Exporte inkl. Monats-Review-Report (PDF/MD), Dashboard | Vollständiger Kernfluss bis zum Kundentermin-Export |
 | M5 – Härtung | DSGVO-Abnahme (AVV, Löschfunktion US-014), Backups, Monitoring, Tests, Pilotierung mit 2–3 echten Kunden | Produktivbetrieb |
 
 ### 11.2 Risiken & Gegenmaßnahmen
@@ -772,9 +777,12 @@ Die Prompts werden aus dem bestehenden Use-Case-Finder-Systemprompt abgeleitet u
 4. Der bestehende Use-Case-Finder (Chat) bleibt während der Einführung parallel nutzbar; seine Markdown-Artefakte können per Copy-Paste als Dokumente importiert werden
 5. Kundenlogos und -namen dürfen in internen Ansichten und Exporten verwendet werden
 
-**Offene Punkte (nicht blockierend für den Start, Klärung bis M4/M5):**
+**Getroffene Entscheidungen (Review vom 07.07.2026):**
 
-1. Genaues Perspektivgeber-Branding (Logo-Dateien, Farbwerte) für Theme und PDF-Exporte
-2. Wortlaut der KI-/Datenschutz-Klausel im Beratungsvertrag (organisatorisch, außerhalb der App)
-3. Aufbewahrungsfristen: Wie lange bleiben Daten beendeter Engagements standardmäßig gespeichert, bevor die Löschung angestoßen wird?
-4. Ob der Monats-Review-Report (Should-have 5.7) bereits ins MVP rutscht oder in Ausbaustufe 2 wandert
+1. **Aufbewahrungsfrist:** 180 Tage nach Engagement-Ende, danach aktive Lösch-Erinnerung (eingearbeitet in 7.3)
+2. **Monats-Review-Report:** Bestandteil des MVP als Must-have-Export (eingearbeitet in 5.7 und M4); die Automatik (Erinnerung + vorbefüllter Entwurf) folgt in Ausbaustufe 2
+3. **KI-/Datenschutz-Klausel:** Entwurf liegt vor unter `docs/vertragsklausel-entwurf.md` – vor Verwendung anwaltlich prüfen lassen
+
+4. **Branding (geliefert 07.07.2026):** Marke **Institut Perspektive Handwerk**. Verbindliche Farben: `#bad31e` (Limette), `#042344` (Nachtblau), `#004c71` (Tiefblau), Schwarz, Weiß. Umsetzung: Primärskala um Tiefblau/Nachtblau, Limette als Akzentskala (`themes/brand.js`); Logo-Symbol (fünf diagonale Balken) als SVG-Nachbau in `src/components/logo/` – kann jederzeit durch die Original-Vektordatei ersetzt werden
+
+**Offene Punkte:** keine blockierenden Punkte offen
